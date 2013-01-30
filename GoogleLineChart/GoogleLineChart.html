@@ -1,0 +1,57 @@
+<html>
+<head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="engine.js"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages: ["corechart"]});
+        google.setOnLoadCallback(drawChart);
+        function getData() {
+            var bin;
+            var d = [];
+            d[0] = ['Number', 'Value'];
+            o = [];
+            e = [];
+            c = "";
+            f = "";
+            for (var i = 0; i < 100; i++) {
+                bin = hex2bin(i.toString())
+                num = bin.match(/1/g)
+                if (num) {
+                    if (num.length % 2 == 0) {
+                        d[i + 1] = [i.toString(), 0]
+                        o.push(i);
+                        c += i.toString().substr(-1);
+                    }
+                    else {
+                        d[i + 1] = [i.toString(), 1];
+                        e.push(i);
+                        f += i.toString().substr(-1);
+                    }
+                }
+                else {
+                    d[i + 1] = [i.toString(), 0]
+                    o.push(i);
+                    c += i.toString().substr(-1);
+                }
+            }
+            console.log(o);
+            console.log(e);
+            console.log(c);
+            console.log(f);
+            return d;
+        }
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable(getData());
+            var options = {
+                title: 'Calculate'
+            };
+            var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+    </script>
+</head>
+<body>
+<div id="chart_div"></div>
+</body>
+</html>
